@@ -1,34 +1,43 @@
 import React, { useState } from "react";
 import "./styles.css";
 const Blog = () => {
-  const [text, setText] = useState();
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log(text);
-    React.createElement("div", { className: "read_section" }, text);
-  };
+  const [Post,setPost] = useState(["Title: ", " Post:"]);
+  const [author,setAuthor] = useState([" Author:"]);
+  const [items,setItems] = useState([]);
+
+  const addItem = () => {
+    if(!Post){
+      alert("The Post form must be filled");
+    }
+    const item = {
+      id: Math.floor(Math.random() * 1000),
+      value: [Post, author]
+    }; 
+    setItems(oldList =>[...oldList,item]);
+    setPost("");
+    console.log(Post);
+    console.log(items); 
+  }
+
+  const deleteItem = (id) => {
+    const newArray = items.filter(item => item.id !== id);
+    setItems(newArray);
+    
+  }
   return (
-    <div>
-      <div className="container">
-        <div className="post_section">
-          <h5>Create a post</h5>
-          <form className="inputs" onSubmit={handleSubmit}>
-            <textarea
-              className="post_text"
-              placeholder="Add a post"
-              name="blog"
-              onChange={(e) => setText(e.target.value)}
-            ></textarea>
-            <button type="submit" className="post_btn" onClick={handleSubmit}>
-              Post
-            </button>
-          </form>
-        </div>
-      </div>
-      <div className="read_section">
-        <p className="post_content">{text}</p>
-      </div>
+    <div className="container">
+    <textarea className='post' placeholder='Enter Post name' value={Post} onChange = {e => setPost(e.target.value)}> </textarea>
+    <input className='author' placeholder='Enter Author name' value={author} onChange = {e => setAuthor(e.target.value)} />
+    <button className='add_btn' onClick={() => addItem()}>Add Post</button>
+
+    <div className="display_post">
+     {items.map(item => {
+       return (
+         <p className='list_of_Posts' key={item.id}>{item.value}<button className='delete_btn' onClick={() => deleteItem(item.id)}>Delete</button></p>
+       )
+     })}
     </div>
+   </div>
   );
 };
 
