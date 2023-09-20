@@ -1,11 +1,9 @@
 import React, { useState } from 'react'
-import Blog from './Blog';
-
-const PostBlog = () => {
+const PostBlog = ({ addToBlog }) => {
     const [text, setText] = useState("");
+
     const handleSubmit = e =>{
         e.preventDefault();
-        console.log(text)
     }
   return (
     <div className='post_section'>
