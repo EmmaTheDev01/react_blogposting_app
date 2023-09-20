@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import "./styles.css";
-import PostBlog from "./PostBlog";
 const Blog = () => {
-  const [text, setText] = useState("");
+  const [text, setText] = useState();
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(text);
+    React.createElement("div", { className: "read_section" }, text);
   };
   return (
     <div>
@@ -19,14 +19,14 @@ const Blog = () => {
               name="blog"
               onChange={(e) => setText(e.target.value)}
             ></textarea>
-            <button className="post_btn">Post</button>
+            <button type="submit" className="post_btn" onClick={handleSubmit}>
+              Post
+            </button>
           </form>
         </div>
       </div>
       <div className="read_section">
-        <p className="post_content" onChange={(e) => setText(text)}>
-          {text}
-        </p>
+        <p className="post_content">{text}</p>
       </div>
     </div>
   );
